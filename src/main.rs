@@ -17,7 +17,7 @@ fn main() {
             println!("message: {:?}", message);
 
             let mut params = std::collections::HashMap::new();
-            params.insert("text", subject);
+            params.insert("text", message);
             let client = reqwest::Client::builder().redirect(reqwest::RedirectPolicy::none()).build()?;
             let resp = client.post(&slack_webhook).json(&params).send()?;
             
