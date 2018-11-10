@@ -1,14 +1,30 @@
 extern crate aws_lambda as lambda;
-#[macro_use] extern crate log;
+extern crate reqwest;
+#[macro_use]
+extern crate failure;
 
-use lambda::event::s3::S3Event;
+use lambda::event::sns::SnsEvent;
 
 fn main() {
-    lambda::start(|input: S3Event| {
-        let mut names = Vec::new();
+    lambda::start(|input: SnsEvent| {
+        let slack_webhook = std::env::var("SLACK_WEBHOOK")?;
+
         for record in input.records {
-            names.push(record.event_name)
+            let subject = record.sns.subject.unwrap_or(String::from(""));
+            let message = record.sns.message.unwrap_or(String::from(""));
+
+            println!("subject: {:?}", subject);
+            println!("message: {:?}", message);
+
+            let mut params = std::collections::HashMap::new();
+            params.insert("text", subject);
+            let client = reqwest::Client::builder().redirect(reqwest::RedirectPolicy::none()).build()?;
+            let resp = client.post(&slack_webhook).json(&params).send()?;
+            
+            if !resp.status().is_success() {
+                return Err(format_err!("Slack API returns non success HTTP code: {}", resp.status()));
+            }
         }
-        Ok(format!("Event names:\n{:#?}", names))
+        Ok("ok")
     })
 }

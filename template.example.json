@@ -10,7 +10,12 @@
             "MemorySize": 128,
             "Role": "WRITE YOUR LAMBDA EXECUTION ROLE",
             "Runtime": "go1.x",
-            "Timeout": 7
+            "Timeout": 7,
+            "Environment": {
+              "Variables": {
+                "SLACK_WEBHOOK": "WRITE YOUR SLACK INCOMING WEBHOOK URL"
+              }
+            }
          },
          "Type": "AWS::Serverless::Function"
       }
