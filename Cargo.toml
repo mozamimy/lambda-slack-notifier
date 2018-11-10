@@ -1,0 +1,8 @@
+[package]
+name = "lambda-slack-notifier"
+version = "0.1.0"
+authors = ["mozamimy <alice@mozami.me>"]
+
+[dependencies]
+aws_lambda = { git = "https://github.com/srijs/rust-aws-lambda" }
+log = "0.4.6"
