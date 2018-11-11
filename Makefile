@@ -10,6 +10,8 @@ build:
 	else \
 		docker run -v ${PWD}:/workspace -v /tmp/cargo-registry:/opt/cargo/registry aws-lambda-rust cargo build --jobs ${JOBS}; \
 	fi
+check-fmt:
+	docker run -v ${PWD}:/workspace -v /tmp/cargo-registry:/opt/cargo/registry aws-lambda-rust cargo fmt --all -- --check
 zip:
 	cd target/${BUILD}/ && zip ../../package/${APP_NAME}.zip ${APP_NAME}
 run:

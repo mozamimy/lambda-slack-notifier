@@ -20,7 +20,7 @@ fn main() {
             params.insert("text", message);
             let client = reqwest::Client::builder().redirect(reqwest::RedirectPolicy::none()).build()?;
             let resp = client.post(&slack_webhook).json(&params).send()?;
-            
+
             if !resp.status().is_success() {
                 return Err(format_err!("Slack API returns non success HTTP code: {}", resp.status()));
             }
