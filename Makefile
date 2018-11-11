@@ -15,6 +15,6 @@ check-fmt:
 zip:
 	cd target/${BUILD}/ && zip ../../package/${APP_NAME}.zip ${APP_NAME}
 run:
-	sam local generate-event sns notification | sam local invoke -t template.example.json SlackNotifier
+	sam local invoke -t template.example.json -e event.example.json SlackNotifier
 clean:
 	rm -rf target/ package/${APP_NAME}.zip
