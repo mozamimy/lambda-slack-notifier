@@ -1,14 +1,3 @@
-# lambda-slack-notifier
-
-[![CircleCI](https://circleci.com/gh/mozamimy/lambda-slack-notifier/tree/master.svg?style=svg)](https://circleci.com/gh/mozamimy/lambda-slack-notifier/tree/master)
-
-## About
-
-This program sends a message to Slack when it receives like following event data published from AWS SNS topic.
-
-Option elements can be omitted from `MessageAttributes` object. In that case, this function fills omitted these options with default values of incoming-webhook.
-
-```json
 {
   "Records": [
     {
@@ -29,7 +18,7 @@ Option elements can be omitted from `MessageAttributes` object. In that case, th
         "MessageAttributes": {
           "Channel": {
             "Type": "String",
-            "Value": "#nanika-channel"
+            "Value": "#moza-notifications"
           },
           "UserName": {
             "Type": "String",
@@ -48,21 +37,3 @@ Option elements can be omitted from `MessageAttributes` object. In that case, th
     }
   ]
 }
-```
-
-## Run locally with SAM CLI
-
-```sh
-make build-docker-image
-make build
-make zip
-make run
-```
-
-## Releae build
-
-```sh
-make build-docker-image
-make build BUILD=release
-make zip BUILD=release
-```
