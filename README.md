@@ -66,3 +66,7 @@ make build-docker-image
 make build BUILD=release
 make zip BUILD=release
 ```
+
+## License
+
+MIT
