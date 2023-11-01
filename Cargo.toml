@@ -2,12 +2,15 @@
 name = "lambda-slack-notifier"
 version = "0.1.0"
 authors = ["mozamimy <alice@mozami.me>"]
+edition = '2021'
 
 [dependencies]
-aws_lambda = { git = "https://github.com/srijs/rust-aws-lambda" }
-log = "0.4.6"
-reqwest = "0.9.4"
-failure = "0.1.3"
-serde = "1.0.80"
-serde_derive = "1.0.80"
-serde_json = "1.0.33"
+lambda_runtime = "0.8.2"
+aws_lambda_events = { version = "0.11.1", default-features = false, features = ["sns"] }
+tokio = "1.33.0"
+log = "0.4.20"
+reqwest = { version = "0.11.22", default-features = false, features = ["rustls-tls", "json"] }
+simple-error = "0.3.0"
+serde = "1.0.190"
+serde_derive = "1.0.190"
+serde_json = "1.0.108"
