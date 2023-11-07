@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["mozamimy <alice@mozami.me>"]
 edition = '2021'
 
+[[bin]]
+name = "bootstrap"
+path = "src/main.rs"
+
 [dependencies]
 lambda_runtime = "0.8.2"
 aws_lambda_events = { version = "0.11.1", default-features = false, features = ["sns"] }
