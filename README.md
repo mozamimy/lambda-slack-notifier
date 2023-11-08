@@ -1,7 +1,5 @@
 # lambda-slack-notifier
 
-[![CircleCI](https://circleci.com/gh/mozamimy/lambda-slack-notifier/tree/master.svg?style=svg)](https://circleci.com/gh/mozamimy/lambda-slack-notifier/tree/master)
-
 ## About
 
 This program sends a message to Slack when it receives like following event data published from AWS SNS topic.
