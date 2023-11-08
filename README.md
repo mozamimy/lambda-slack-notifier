@@ -48,21 +48,15 @@ Option elements can be omitted from `MessageAttributes` object. In that case, th
 }
 ```
 
-## Run locally with SAM CLI
+## Run locally with Docker
+
+https://docs.aws.amazon.com/lambda/latest/dg/images-test.html
 
 ```sh
-make build-docker-image
-make build
-make zip
-make run
-```
-
-## Releae build
-
-```sh
-make build-docker-image
-make build BUILD=release
-make zip BUILD=release
+docker build -t lambda-slack-notifier .
+docker run -p 9000:8080 -e SLACK_WEBHOOK=https://xxxxxxxx lambda-slack-notifier
+# In other terminal session
+curl "http://localhost:9000/2015-03-31/functions/function/invocations" -d@event.example.json
 ```
 
 ## License
