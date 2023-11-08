@@ -1,0 +1,37 @@
+name: Release with Docker build
+
+concurrency:
+  group: release
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    timeout-minutes: 10
+    permissions:
+      id-token: write
+    env:
+      REPO: public.ecr.aws/l2b8p3m2/lambda-slack-notifier
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::205176994941:role/ActionsLambdaSlackNotifierDockerPush
+          aws-region: ap-northeast-1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Generate REVISION file
+        run: echo "${{ github.sha }}" > REVISION
+      - run: |
+          docker buildx build \
+            --tag "${{ env.REPO }}:${{ github.sha }}" \
+            --tag "${{ env.REPO }}:${{ github.ref_name }}" \
+            --tag "${{ env.REPO }}:latest" \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --cache-from "${{ env.REPO }}:latest" \
+            --push \
