@@ -38,5 +38,7 @@ jobs:
             --tag "${{ env.REPO }}:latest" \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --cache-from "${{ env.REPO }}:latest" \
-            --push \
             .
+          docker push "${{ env.REPO }}:${{ github.sha }}"
+          docker push "${{ env.REPO }}:${{ github.ref_name }}"
+          docker push "${{ env.REPO }}:latest"
